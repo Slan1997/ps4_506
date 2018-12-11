@@ -1,7 +1,7 @@
 source("ps4_q2_funcs.R")
-install.packages("doParallel",lib='~/newlib')
+install.packages("doParallel",lib='/afs/umich.edu/user/l/a/lanshi/R/newlib',repo='http://cran.stat.ucla.edu/')
 library(doParallel)
-install.packages("data.table",lib='~/newlib')
+install.packages("data.table",lib='/afs/umich.edu/user/l/a/lanshi/R/newlib',repo='http://cran.stat.ucla.edu/')
 library(data.table)
 
 library()
