@@ -1,8 +1,7 @@
 source("ps4_q2_funcs.R")
-.libPaths('~/Rlib')
-install.packages("doParallel")
+install.packages("doParallel",lib='~/newlib')
 library(doParallel)
-install.packages("data.table")
+install.packages("data.table",lib='~/newlib')
 library(data.table)
 
 library()
