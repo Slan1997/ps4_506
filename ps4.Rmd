@@ -1,0 +1,39 @@
+---
+title: "PS4"
+author: "Lan Shi 60625430"
+date: "12/11/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+```{r ps4_q1_source,echo=FALSE, message = FALSE}
+source('ps4_q1.R')
+knitr::kable(t1, align = 'r', caption="All-time Leader in Hits for Each Birth Country")
+```
+
+## Question 2
+#### a)
+```{r ps4_q2a_source, echo=FALSE,message = FALSE}
+source('ps4_q2a.R')
+knitr::kable(result_a, align = 'r', caption="Results for q2 (a)")
+```
+
+#### b) c) Results are in the corresponding files.
+Since I didn't get my flux account in time, Prof. Henderson excused me from the flux portions of the assignment and asked me to do something else. Here is the requirement:   
+"You should still do Q2 parts b and c but:    
+
+ for 2b, you can simply run your script on mario or luigi (scs.dsc.umich.edu)  
+ for 2c, you should still right a script that runs in batch mode but you don't need to use a job array to run it.   
+
+ Instead of using a job array for 2c, run your script as Rscript ps4_q2c.R sigma mc_rep n_cores (manually) for each of the different values of sigma."  
+  
+##### Thus, the files I submitted are: ps4_q2_funcs.R, ps4_q2a.R, ps4_q2b.R, ps4_q2c.R, ps4_q2b.Rout, results_q4b.RData, ps4_q2c-X.Rout (X = 1, 2, 4), and "cmd for Rout files.txt" (a txt file including my cmd lines).
+
+## Question 3
+
+
+

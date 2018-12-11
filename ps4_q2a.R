@@ -1,5 +1,6 @@
 source("ps4_q2_funcs.R")
-
+library(data.table)
+library(magrittr)
 # Parameters: -----------------------------------------------------------------
 n = 1e3; p = 1e2; r = .1; rho_s = seq(-3,3)*.25  #rho is chose from rho_s
 beta = c( rep(.1, floor(r*p)), rep(0, p - floor(r*p)) ) 
