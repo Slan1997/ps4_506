@@ -66,3 +66,4 @@ for (i in 1:length(rho_s)){
 result_c <- rbindlist(lapply(f, FUN = value))
 
 result_c
+save(result_c,file="results_q4b.RData")
