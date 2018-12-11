@@ -9,6 +9,9 @@ args = commandArgs(trailingOnly=TRUE)
 sigma_arg = as.numeric(args[2])
 mc_rep_arg = as.numeric(args[3])
 n_cores_arg = as.numeric(args[4])
+print(paste("sigma=",sigma_arg))
+print(paste("mc_rep=",mc_rep_arg))
+print(paste("n_cores=",n_cores_arg))
 
 # Parameters: -----------------------------------------------------------------
 n = 1e3; p = 1e2; r = .1; 
