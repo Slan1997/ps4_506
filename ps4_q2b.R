@@ -62,4 +62,4 @@ result_b
 ## Always shut the cluster down when done
 stopCluster(cl)
 
-
+save(result_c,file="results_q4b.RData")
