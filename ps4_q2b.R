@@ -2,8 +2,8 @@ source("ps4_q2_funcs.R")
 .libPaths('/afs/umich.edu/user/l/a/lanshi/R/x86_64-redhat-linux-gnu-library/3.5')
 library(doParallel)
 library(data.table)
+library(magrittr)
 
-library()
 # Parameters: -----------------------------------------------------------------
 n = 1e3; p = 1e2; r = .1; 
 rho_s = seq(-3,3)*.25  #rho is chose from rho_s
