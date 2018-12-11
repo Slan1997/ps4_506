@@ -1,0 +1,102 @@
+
+R version 3.5.0 (2018-04-23) -- "Joy in Playing"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-redhat-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> source("ps4_q2_funcs.R")
+> .libPaths('/afs/umich.edu/user/l/a/lanshi/R/x86_64-redhat-linux-gnu-library/3.5')
+> library(doParallel)
+Loading required package: foreach
+Loading required package: iterators
+Loading required package: parallel
+> library(data.table)
+> library(magrittr)
+> 
+> # Parameters: -----------------------------------------------------------------
+> n = 1e3; p = 1e2; r = .1; 
+> rho_s = seq(-3,3)*.25  #rho is chose from rho_s
+> sigma_s = c(0.25,0.5,1)
+> 
+> beta = c( rep(.1, floor(r*p)), rep(0, p - floor(r*p)) ) 
+> dim(beta) = c(p, 1)  # let beta become px1 matrix
+> 
+> # X ~ N(0, Sigma): -----------------------------------------------------------
+> get_result_b = function(rho_input,sigma_input){ #sigma=1,mc_rep=1e4
++   Sig = diag(p)
++   for (i in 1:p){
++     for (j in 1:p){
++       if (i != j) Sig[i,j] = rho_input*beta[i]*beta[j]
++       if (i == j) Sig[i,j] = 1
++     }
++   }
++   R = chol(Sig)
++   X = matrix( rnorm(n*p), n, p) %*%  R
++   P = sim_beta(X, beta, sigma=sigma_input, mc_rep = 1e4)
++   all0 =
++     lapply( c('holm', 'bonferroni', 'BH', 'BY'), function(x){
++       evaluate( apply(P, 2, p.adjust, method = x), tp_ind = 1:10)
++     })
++   all = rbindlist(all0)
++   dt = all[ , method := c('holm', 'bonferroni', 'BH', 'BY') ]  %>% 
++     .[,c("rho","sigma") := list(rep(rho_input,4),rep(1,4))]  #sigma=1
++   
++   dt_est = dt[,.(rho,sigma,fwer,fdr,sens,spec,method)] %>% 
++     melt(.,id.vars=c('rho','sigma','method'), measure.vars = c('fwer', 'fdr', 'sens', 'spec'),
++          variable.name = "metric",value.name = "est" )
++   
++   dt_se = dt[,.(rho,sigma,fwer_se,fdr_se,sens_se,spec_se,method)] %>% 
++     melt(.,id.vars=c('rho','sigma','method'), measure.vars = c('fwer_se', 'fdr_se', 'sens_se', 'spec_se'),
++          variable.name = "metric",value.name = "se" ) %>% .[,.(se)]
++   
++   result = cbind(dt_est,dt_se)
++   result = result[,.(rho,sigma,metric,method,est,se)]
++   return(result)
++ }
+> 
+> #doparallel simulations
+> ncores = 4
+> cl = makeCluster(ncores)
+> # register the cluster
+> registerDoParallel(cl)
+> 
+> ## do parallel simutation with foreach
+> # nested foreach loops 
+> result_b = foreach(i=1:length(rho_s), .combine='rbind') %:% 
++   foreach(j=1:length(sigma_s), .combine='rbind') %do% {
++     get_result_b(rho_s[i],sigma_s[j])
++   }
+> result_b
+       rho sigma metric     method        est           se
+  1: -0.75     1   fwer       holm 0.04850000 2.148203e-03
+  2: -0.75     1   fwer bonferroni 0.04660000 2.107805e-03
+  3: -0.75     1   fwer         BH 0.24970000 4.328394e-03
+  4: -0.75     1   fwer         BY 0.03940000 1.945447e-03
+  5: -0.75     1    fdr       holm 0.01286849 6.364701e-04
+ ---                                                      
+332:  0.75     1   sens         BY 0.27597000 1.794346e-03
+333:  0.75     1   spec       holm 0.99945222 2.466427e-05
+334:  0.75     1   spec bonferroni 0.99947889 2.401262e-05
+335:  0.75     1   spec         BH 0.99654889 6.785651e-05
+336:  0.75     1   spec         BY 0.99955778 2.250379e-05
+> save(result_b,file="results_q4b.RData")
+> ## Always shut the cluster down when done
+> stopCluster(cl)
+> 
+> 
+> proc.time()
+   user  system elapsed 
+180.101   0.678 181.675 
