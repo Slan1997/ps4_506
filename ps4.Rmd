@@ -2,7 +2,7 @@
 title: "PS4"
 author: "Lan Shi 60625430"
 date: "12/11/2018"
-output: pdf_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -34,6 +34,32 @@ Since I didn't get my flux account in time, Prof. Henderson excused me from the 
 ##### Thus, the files I submitted are: ps4_q2_funcs.R, ps4_q2a.R, ps4_q2b.R, ps4_q2c.R, ps4_q2b.Rout, results_q4b.RData, ps4_q2c-X.Rout (X = 1, 2, 4), and "cmd for Rout files.txt" (a txt file including my cmd lines).
 
 ## Question 3
+#### a)
+See .sas file.
 
+#### b)
+Only print the first 10 observations of the 2 variables: hcpcs_code, hcpcs_description.    
 
+<center>
+![](https://raw.githubusercontent.com/Slan1997/ps4_506/master/q3out/Picture1.png){width=500px}
+</center>  
 
+#### c)
+Table for c)  
+<center>
+![](https://raw.githubusercontent.com/Slan1997/ps4_506/master/q3out/Picture3.png){width=500px}
+</center>  
+
+#### d)
+Table for d)  
+<center>
+![](https://raw.githubusercontent.com/Slan1997/ps4_506/master/q3out/Picture4.png){width=500px}
+</center>  
+
+#### e)
+```{r ps4_q3,echo=FALSE, message = FALSE}
+t_c = read.csv("ps4_q3c.csv")
+t_d = read.csv("ps4_q3d.csv")
+t_c == t_d
+```
+Thus, results from "c" and "d" match.
