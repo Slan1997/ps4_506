@@ -42,7 +42,7 @@ get_result_b = function(rho_input,sigma_input){ #sigma=1,mc_rep=1e4
 }
 
 #doparallel simulations
-install.packages("doParallel")
+install.packages("doParallel",lib="~/R/mynewlib")
 library(doParallel)
 ncores = 4
 cl = makeCluster(ncores)
