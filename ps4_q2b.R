@@ -1,5 +1,11 @@
 source("ps4_q2_funcs.R")
+.libPaths('~/Rlib')
+install.packages("doParallel")
+library(doParallel)
+install.packages("data.table")
+library(data.table)
 
+library()
 # Parameters: -----------------------------------------------------------------
 n = 1e3; p = 1e2; r = .1; 
 rho_s = seq(-3,3)*.25  #rho is chose from rho_s
@@ -42,8 +48,6 @@ get_result_b = function(rho_input,sigma_input){ #sigma=1,mc_rep=1e4
 }
 
 #doparallel simulations
-install.packages("doParallel",lib="/afs/umich.edu/user/l/a/lanshi/R/mynewlib")
-library(doParallel)
 ncores = 4
 cl = makeCluster(ncores)
 # register the cluster
