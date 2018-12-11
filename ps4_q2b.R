@@ -58,8 +58,7 @@ result_b = foreach(i=1:length(rho_s), .combine='rbind') %:%
     get_result_b(rho_s[i],sigma_s[j])
   }
 result_b
-
+save(result_b,file="results_q4b.RData")
 ## Always shut the cluster down when done
 stopCluster(cl)
 
-save(result_c,file="results_q4b.RData")
